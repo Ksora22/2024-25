@@ -59,7 +59,7 @@ else {
 
 
 // function myFunction(x) { 
-//     alert("Row index is: " + x.rowIndex);}
+// alert("Row index is: " + x.rowIndex);}
 
 
 function deleteRow(rowid) {
