@@ -1,5 +1,27 @@
 let IDtr = 1;
-function myFunction() {
+
+function getTableBody() {
+    return document.querySelector('#tbody');
+}
+
+function createDeleteButton(rowid) {
+    const btn = document.createElement('button');
+    btn.innerHTML = "Удалить"; 
+    btn.setAttribute("class", "button blue");
+    btn.addEventListener("click", function() { deleteRow(rowid); });
+
+    return btn;
+}
+
+function createCell(cellText) {
+    const td = document.createElement('td');
+    const cellElement = document.createTextNode(cellText);
+
+    td.prepend(cellElement); 
+    return td;  
+}
+
+function addRow() {
     
     let input = document.querySelector('#input1');
     let input2 = document.querySelector('#input2');
@@ -8,34 +30,26 @@ alert('Поле пустое');
 }
 else {
    
-    let tbody = document.querySelector('#tbody');
-    let tr = tbody.insertRow(0);
-    tr.setAttribute('id', ++IDtr);
-        let td = document.createElement('td');
-        tr.prepend(td);
-       let trIndex = tr.rowIndex;
-        const btn = document.createElement('button');
-        btn.innerHTML = 'Удалить'; 
-        document.getElementById('button').appendChild(btn);
-        btn.onclick = function(){
-            tbody.deleteRow(trIndex)
-        //alert ("Номер " + trIndex)
-        //     //confirm('Are you sure?')
-           
-        };
-        td.prepend(btn);
+    const tbody = getTableBody();
+    const tr = tbody.insertRow(0);
+    const rowid = 'row_' + (++IDtr);
+    tr.setAttribute('id', rowid);
+    const td = document.createElement('td');
+    tr.prepend(td);
+    const btn = createDeleteButton(rowid);
+        // btn.onclick = function(){
+        //     deleteRow(rowId);
+        // };
+        
+    td.prepend(btn);
    
+    //tr.prepend(createDeleteButtonCell(rowid));
 
-    let td2 = document.createElement('td');
-        tr.prepend(td2);
-        let cellText2 = document.createTextNode(input2.value);
-    td2.prepend(cellText2);
+    //const tdc = createCell(input2.value);
+    tr.prepend(createCell(input2.value)/*tdc*/);
+    tr.prepend(createCell(input.value));
 
-    let td3 = document.createElement('td');
-    tr.prepend(td3);
-    let cellText3 = document.createTextNode(input.value);
-td3.prepend(cellText3);
-table.prepend(tr);
+    table.prepend(tr);
 }
 }
 //document.addEventListener("click", myDeleteFunction);
@@ -48,12 +62,15 @@ table.prepend(tr);
 //     alert("Row index is: " + x.rowIndex);}
 
 
-// function deleteRow(rowid) {
-//     var row = document.getElementById(rowid);
-//     if (row) {
-//        row.parentNode.removeChild(row);
-//     }
-//  }
+function deleteRow(rowid) {
+
+    if (confirm("are you sure?")) {
+        const table = document.getElementById('table');
+        const deletingRow = document.getElementById(rowid);
+        table.deleteRow(deletingRow.rowIndex);
+        // getTableBody().parentNode.deleteRow(document.getElementById(rowid).rowIndex);
+    }
+}
 
 
 
